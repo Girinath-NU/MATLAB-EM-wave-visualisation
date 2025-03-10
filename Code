@@ -1,0 +1,49 @@
+clc;
+clear;
+close all;
+
+A = 1;                
+k = 2 * pi;            
+omega = 2 * pi;        
+t = linspace(0, 4, 200); 
+z = linspace(0, 4, 200); 
+[T, Z] = meshgrid(t, z);
+
+Ex_linear = A * cos(omega * T - k * Z);
+Ey_linear = zeros(size(Ex_linear));
+Ex_circular = A * cos(omega * T - k * Z);
+Ey_circular = A * sin(omega * T - k * Z);
+Ex_elliptical = A * cos(omega * T - k * Z);
+Ey_elliptical = 0.5 * A * sin(omega * T - k * Z);
+
+figure;
+for i = 1:length(t)
+    subplot(1, 3, 1);
+    plot3(Ex_linear(:, i), Ey_linear(:, i), Z(:, i), 'r', 'LineWidth', 2);
+    title('Linear Polarization');
+    xlabel('Ex'); ylabel('Ey'); zlabel('Z');
+    grid on;
+    axis equal;
+    hold on;
+
+    subplot(1, 3, 2);
+    plot3(Ex_circular(:, i), Ey_circular(:, i), Z(:, i), 'g', 'LineWidth', 2);
+    title('Circular Polarization');
+    xlabel('Ex'); ylabel('Ey'); zlabel('Z');
+    grid on;
+    axis equal;
+    hold on;
+
+    subplot(1, 3, 3);
+    plot3(Ex_elliptical(:, i), Ey_elliptical(:, i), Z(:, i), 'b', 'LineWidth', 2);
+    title('Elliptical Polarization');
+    xlabel('Ex'); ylabel('Ey'); zlabel('Z');
+    grid on;
+    axis equal;
+    hold on;
+
+    pause(0.03);
+    if i < length(t)
+        clf;
+    end
+end
